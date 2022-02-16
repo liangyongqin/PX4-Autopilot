@@ -90,8 +90,4 @@ private:
 
 	uORB::Subscription _actuator_controls_1_sub{ORB_ID(actuator_controls_0)};
 
-	DEFINE_PARAMETERS(
-		(ParamInt<px4::params::CA_STDVTOL_N_P>) _param_ca_stdvtol_n_p ///< number of pushers
-	)
-
 };

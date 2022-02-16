@@ -49,17 +49,11 @@ ActuatorEffectivenessStandardVTOL::getEffectivenessMatrix(Configuration &configu
 		return false;
 	}
 
-	// MC motors
+	// Motors
 	configuration.selected_matrix = 0;
+	_mc_rotors.enableYawControlNonUpwards(false);
 	const bool mc_rotors_added_successfully = _mc_rotors.addActuators(configuration);
-	_mc_motors_mask = (1u << _mc_rotors.geometry().num_rotors) - 1;
-
-	// Pusher/Puller
-	configuration.selected_matrix = 1;
-
-	for (int i = 0; i < _param_ca_stdvtol_n_p.get(); ++i) {
-		configuration.addActuator(ActuatorType::MOTORS, Vector3f{}, Vector3f{1.f, 0.f, 0.f});
-	}
+	_mc_motors_mask = _mc_rotors.getUpwardsMotors();
 
 	// Control Surfaces
 	configuration.selected_matrix = 1;

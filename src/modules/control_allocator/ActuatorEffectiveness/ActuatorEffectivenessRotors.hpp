@@ -74,6 +74,7 @@ public:
 		RotorGeometry rotors[NUM_ROTORS_MAX];
 		int num_rotors{0};
 		bool yaw_disabled{false};
+		bool yaw_disabled_non_upwards{false}; ///< keeps yaw enabled for upward facing motors
 	};
 
 	ActuatorEffectivenessRotors(ModuleParams *parent, AxisConfiguration axis_config = AxisConfiguration::Configurable,
@@ -114,6 +115,10 @@ public:
 	static matrix::Vector3f tiltedAxis(float tilt_angle, float tilt_direction);
 
 	void enableYawControl(bool enable) { _geometry.yaw_disabled = !enable; }
+
+	void enableYawControlNonUpwards(bool enable) { _geometry.yaw_disabled_non_upwards = !enable; }
+
+	uint32_t getUpwardsMotors() const;
 
 private:
 	void updateParams() override;
